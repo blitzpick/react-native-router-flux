@@ -10,7 +10,7 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
-import { BackAndroid } from 'react-native';
+import { BackHandler } from 'react-native';
 import NavigationExperimental from 'react-native-experimental-navigation';
 
 import Actions, { ActionMap } from './Actions';
@@ -26,8 +26,8 @@ const {
 
 const propTypes = {
   dispatch: PropTypes.func,
-  backAndroidHandler: PropTypes.func,
-  onBackAndroid: PropTypes.func,
+  backHandler: PropTypes.func,
+  onBack: PropTypes.func,
   onExitApp: PropTypes.func,
 };
 
@@ -40,7 +40,7 @@ class Router extends Component {
     super(props);
     this.renderNavigation = this.renderNavigation.bind(this);
     this.handleProps = this.handleProps.bind(this);
-    this.handleBackAndroid = this.handleBackAndroid.bind(this);
+    this.handleBack = this.handleBack.bind(this);
     const reducer = this.handleProps(props);
     this.state = { reducer };
   }
@@ -52,7 +52,7 @@ class Router extends Component {
   }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.handleBackAndroid);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBack);
   }
 
   componentWillReceiveProps(props) {
@@ -61,24 +61,24 @@ class Router extends Component {
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAndroid);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
   }
 
-  handleBackAndroid() {
+  handleBack() {
     const {
-      backAndroidHandler,
-      onBackAndroid,
+      backHandler,
+      onBack,
       onExitApp,
     } = this.props;
     // optional for customizing handler
-    if (backAndroidHandler) {
-      return backAndroidHandler();
+    if (backHandler) {
+      return backHandler();
     }
 
     try {
-      Actions.androidBack();
-      if (onBackAndroid) {
-        onBackAndroid();
+      Actions.back();
+      if (onBack) {
+        onBack();
       }
       return true;
     } catch (err) {

@@ -209,7 +209,7 @@ declare namespace RNRF {
      * optional wrappert
      */
     wrapBy?: ()=>any,
-      
+
     panHandlers?: null | (()=>any)
   }
 
@@ -266,7 +266,7 @@ declare namespace RNRF {
     rightButtonIconStyle?: ReactNative.ViewStyle,
     rightButtonStyle?: ReactNative.ViewStyle,
     rightButtonTextStyle?: ReactNative.TextStyle,
-    backAndroidHandler? : Function
+    backHandler? : Function
   }
   export class Router extends React.Component<RouterProps, {}>{ }
 
@@ -284,7 +284,7 @@ declare namespace RNRF {
   }
 
   export var Actions: RNRFActions;
-  
+
   // ActionsConst
   interface RNRFActionConst {
     JUMP: string,
